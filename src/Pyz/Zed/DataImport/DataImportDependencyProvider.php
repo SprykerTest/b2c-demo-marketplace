@@ -12,6 +12,7 @@ use Pyz\Zed\MerchantProductOfferDataImport\Communication\Plugin\CombinedMerchant
 use Pyz\Zed\PriceProductOfferDataImport\Communication\Plugin\CombinedPriceProductOfferDataImportPlugin;
 use Pyz\Zed\ProductOfferStockDataImport\Communication\Plugin\CombinedProductOfferStockDataImportPlugin;
 use Pyz\Zed\ProductOfferValidityDataImport\Communication\Plugin\CombinedProductOfferValidityDataImportPlugin;
+use Spryker\Service\Flysystem\FlysystemServiceInterface;
 use Spryker\Zed\AclDataImport\Communication\Plugin\AclGroupDataImportPlugin;
 use Spryker\Zed\AclDataImport\Communication\Plugin\AclGroupRoleDataImportPlugin;
 use Spryker\Zed\AclDataImport\Communication\Plugin\AclRoleDataImportPlugin;
@@ -89,6 +90,8 @@ class DataImportDependencyProvider extends SprykerDataImportDependencyProvider
     public const FACADE_STORE = 'FACADE_STORE';
     public const FACADE_MERCHANT_USER = 'FACADE_MERCHANT_USER';
 
+    public const SERVICE_FLYSYSTEM = 'SERVICE_FLYSYSTEM';
+
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -108,6 +111,21 @@ class DataImportDependencyProvider extends SprykerDataImportDependencyProvider
         $container = $this->addStockFacade($container);
         $container = $this->addStoreFacade($container);
         $container = $this->addMerchantUserFacade($container);
+        $container = $this->addFlysystemService($container);
+
+        return $container;
+    }
+
+    /**
+     * @param Container $container
+     *
+     * @return Container
+     */
+    private function addFlysystemService(Container $container): Container
+    {
+        $container->set(static::SERVICE_FLYSYSTEM, function (Container $container): FlysystemServiceInterface {
+            return $container->getLocator()->flysystem()->service();
+        });
 
         return $container;
     }

@@ -138,6 +138,7 @@
         "spryker/documentation-generator-rest-api": "^1.12.1",
         "spryker/dummy-marketplace-payment": "^0.2.2",
         "spryker/entity-tags-rest-api": "^1.0.2",
+        "spryker/flysystem-aws3v3-file-system": "^1.0.0",
         "spryker/flysystem-ftp-file-system": "^1.0.2",
         "spryker/flysystem-local-file-system": "^1.0.2",
         "spryker/gift-card-mail-connector": "^1.0.5",

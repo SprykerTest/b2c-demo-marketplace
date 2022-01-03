@@ -1,6 +1,7 @@
 <?php
 
 use Monolog\Logger;
+use Pyz\Service\FlysystemAws3v3FileSystem\Plugin\Flysystem\Aws3v3FilesystemBuilderPlugin;
 use Pyz\Shared\Console\ConsoleConstants;
 use Pyz\Shared\Scheduler\SchedulerConfig;
 use Pyz\Yves\ShopApplication\YvesBootstrap;
@@ -582,3 +583,19 @@ $config[CategoryConstants::CATEGORY_IS_CLOSURE_TABLE_EVENTS_ENABLED] = false;
 
 // >>> Product Label
 $config[ProductLabelConstants::PRODUCT_LABEL_TO_DE_ASSIGN_CHUNK_SIZE] = 1000;
+
+// ---------------------
+// --- AWS S3 Bucket ---
+// ---------------------
+
+// >>> FILESYSTEM
+$config[FileSystemConstants::FILESYSTEM_SERVICE]['s3-import'] = [
+    'sprykerAdapterClass' => Aws3v3FilesystemBuilderPlugin::class,
+    'root' => '/',
+    'path' => '/',
+    'key' => getenv('SPRYKER_S3_CSV_BUCKET_KEY') ?: '',
+    'secret' => getenv('SPRYKER_S3_CSV_BUCKET_SECRET') ?: '',
+    'bucket' => 'tarxter-prod-csv-uploads',
+    'version' => 'latest',
+    'region' => 'eu-central-1',
+];
