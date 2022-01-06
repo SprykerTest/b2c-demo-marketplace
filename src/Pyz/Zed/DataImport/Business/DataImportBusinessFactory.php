@@ -9,10 +9,7 @@ namespace Pyz\Zed\DataImport\Business;
 
 use Generated\Shared\Transfer\DataImportConfigurationActionTransfer;
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
-use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
-use Pyz\Zed\CsvReader\Business\Reader\CsvReader;
-use Pyz\Zed\CsvReader\Business\Reader\CsvReaderConfiguration;
-use Pyz\Zed\CsvReader\Business\Reader\CsvReaderConfigurationInterface;
+use Pyz\Zed\CsvReader\Dependency\FlysystemS3BusinessFactoryTrait;
 use Pyz\Zed\DataImport\Business\CombinedProduct\Product\CombinedAttributesExtractorStep;
 use Pyz\Zed\DataImport\Business\CombinedProduct\Product\CombinedProductLocalizedAttributesExtractorStep;
 use Pyz\Zed\DataImport\Business\CombinedProduct\ProductAbstract\CombinedProductAbstractHydratorStep;
@@ -137,6 +134,9 @@ use Spryker\Zed\Store\Business\StoreFacadeInterface;
  */
 class DataImportBusinessFactory extends SprykerDataImportBusinessFactory
 {
+
+    use FlysystemS3BusinessFactoryTrait;
+
     /**
      * @param \Generated\Shared\Transfer\DataImportConfigurationActionTransfer $dataImportConfigurationActionTransfer
      *
@@ -237,43 +237,6 @@ class DataImportBusinessFactory extends SprykerDataImportBusinessFactory
     public function createDataImporterConditional($importType, DataReaderInterface $reader)
     {
         return new DataImporterConditional($importType, $reader, $this->getGracefulRunnerFacade());
-    }
-
-    /**
-     * @param \Pyz\Zed\CsvReader\Business\Reader\CsvReaderConfigurationInterface $csvReaderConfiguration
-     *
-     * @return \Spryker\Zed\DataImport\Business\Model\DataReader\CsvReader\CsvReader|\Spryker\Zed\DataImport\Business\Model\DataReader\DataReaderInterface
-     */
-    public function createCsvReader(CsvReaderConfigurationInterface $csvReaderConfiguration)
-    {
-        return new CsvReader(
-            $csvReaderConfiguration,
-            $this->getFlysystemService(),
-            $this->createDataSet()
-        );
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer $dataImporterReaderConfigurationTransfer
-     *
-     * @return \Spryker\Zed\DataImport\Business\Model\DataReader\DataReaderInterface
-     */
-    public function createCsvReaderFromConfig(DataImporterReaderConfigurationTransfer $dataImporterReaderConfigurationTransfer)
-    {
-        $csvReaderConfiguration = new CsvReaderConfiguration(
-            $dataImporterReaderConfigurationTransfer,
-            $this->createFileResolver()
-        );
-
-        return $this->createCsvReader($csvReaderConfiguration);
-    }
-
-    /**
-     * @return \Spryker\Service\Flysystem\FlysystemServiceInterface;
-     */
-    private function getFlysystemService(): FlysystemServiceInterface
-    {
-        return $this->getProvidedDependency(DataImportDependencyProvider::SERVICE_FLYSYSTEM);
     }
 
     /**

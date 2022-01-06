@@ -7,12 +7,12 @@
 
 namespace Pyz\Zed\DataImport;
 
+use Pyz\Zed\CsvReader\Dependency\FlysystemS3DependencyProviderTrait;
 use Pyz\Zed\MerchantProductOfferDataImport\Communication\Plugin\CombinedMerchantProductOfferDataImportPlugin;
 use Pyz\Zed\MerchantProductOfferDataImport\Communication\Plugin\CombinedMerchantProductOfferStoreDataImportPlugin;
 use Pyz\Zed\PriceProductOfferDataImport\Communication\Plugin\CombinedPriceProductOfferDataImportPlugin;
 use Pyz\Zed\ProductOfferStockDataImport\Communication\Plugin\CombinedProductOfferStockDataImportPlugin;
 use Pyz\Zed\ProductOfferValidityDataImport\Communication\Plugin\CombinedProductOfferValidityDataImportPlugin;
-use Spryker\Service\Flysystem\FlysystemServiceInterface;
 use Spryker\Zed\AclDataImport\Communication\Plugin\AclGroupDataImportPlugin;
 use Spryker\Zed\AclDataImport\Communication\Plugin\AclGroupRoleDataImportPlugin;
 use Spryker\Zed\AclDataImport\Communication\Plugin\AclRoleDataImportPlugin;
@@ -79,6 +79,8 @@ use Spryker\Zed\StockDataImport\Communication\Plugin\StockStoreDataImportPlugin;
 
 class DataImportDependencyProvider extends SprykerDataImportDependencyProvider
 {
+    use FlysystemS3DependencyProviderTrait;
+
     public const FACADE_AVAILABILITY = 'availability facade';
     public const FACADE_CATEGORY = 'category facade';
     public const FACADE_PRODUCT_BUNDLE = 'product bundle facade';
@@ -112,20 +114,6 @@ class DataImportDependencyProvider extends SprykerDataImportDependencyProvider
         $container = $this->addStoreFacade($container);
         $container = $this->addMerchantUserFacade($container);
         $container = $this->addFlysystemService($container);
-
-        return $container;
-    }
-
-    /**
-     * @param Container $container
-     *
-     * @return Container
-     */
-    private function addFlysystemService(Container $container): Container
-    {
-        $container->set(static::SERVICE_FLYSYSTEM, function (Container $container): FlysystemServiceInterface {
-            return $container->getLocator()->flysystem()->service();
-        });
 
         return $container;
     }

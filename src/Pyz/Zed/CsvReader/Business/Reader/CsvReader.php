@@ -103,6 +103,7 @@ class CsvReader implements DataReaderInterface, ConfigurableDataReaderInterface,
     {
         $fileSystemName = $this->csvReaderConfiguration->getFileSystem();
         $fileName = $this->csvReaderConfiguration->getFileName();
+
         try {
             if (!$this->flysystemService->has($fileSystemName, $fileName)) {
                 throw new DataReaderException(sprintf('File "%s" could not be found or is not readable.', $fileName));
@@ -116,6 +117,7 @@ class CsvReader implements DataReaderInterface, ConfigurableDataReaderInterface,
             $this->fileObject = $this->flysystemService->readStream($fileSystemName, $fileName);
         } catch (FileSystemStreamException $exception) {
             $message = sprintf('File "%s" can not be streamed: ' . $exception->getMessage(), $fileName);
+            dd($message);
             throw new DataReaderException($message, $exception->getCode(), $exception);
         }
     }

@@ -16,4 +16,12 @@ class CsvReaderConfiguration extends SprykerCsvReaderConfiguration implements Cs
     {
         return static::DEFAULT_FILE_SYSTEM;
     }
+
+    /**
+     * @return string
+     */
+    public function getFileName(): string
+    {
+        return $this->dataImporterReaderConfigurationTransfer->getFileNameOrFail();
+    }
 }
