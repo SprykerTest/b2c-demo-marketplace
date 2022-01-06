@@ -1,0 +1,12 @@
+<?php
+
+
+namespace Pyz\Zed\ConfigurableBundleDataImport\Business;
+
+use Pyz\Zed\CsvReader\Dependency\FlysystemS3BusinessFactoryTrait;
+use Spryker\Zed\ConfigurableBundleDataImport\Business\ConfigurableBundleDataImportBusinessFactory as SprykerConfigurableBundleDataImportBusinessFactory;
+
+class ConfigurableBundleDataImportBusinessFactory extends SprykerConfigurableBundleDataImportBusinessFactory
+{
+    use FlysystemS3BusinessFactoryTrait;
+}

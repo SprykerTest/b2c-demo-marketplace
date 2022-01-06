@@ -8,6 +8,7 @@
 namespace Pyz\Zed\CategoryDataImport\Business;
 
 use Pyz\Zed\CategoryDataImport\Business\Model\CategoryWriterStep;
+use Pyz\Zed\CsvReader\Dependency\FlysystemS3BusinessFactoryTrait;
 use Spryker\Zed\CategoryDataImport\Business\CategoryDataImportBusinessFactory as SprykerCategoryDataImportBusinessFactory;
 
 /**
@@ -15,6 +16,8 @@ use Spryker\Zed\CategoryDataImport\Business\CategoryDataImportBusinessFactory as
  */
 class CategoryDataImportBusinessFactory extends SprykerCategoryDataImportBusinessFactory
 {
+    use FlysystemS3BusinessFactoryTrait;
+
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
      */

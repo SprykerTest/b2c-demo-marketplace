@@ -8,6 +8,7 @@
 namespace Pyz\Zed\MerchantProductOfferDataImport\Business;
 
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
+use Pyz\Zed\CsvReader\Dependency\FlysystemS3BusinessFactoryTrait;
 use Pyz\Zed\DataImport\Business\Model\DataImporterConditional;
 use Pyz\Zed\DataImport\Business\Model\DataSet\DataSetConditionInterface;
 use Pyz\Zed\MerchantProductOfferDataImport\Business\Model\Condition\CombinedMerchantProductOfferMandatoryColumnCondition;
@@ -28,6 +29,8 @@ use Spryker\Zed\MerchantProductOfferDataImport\Business\MerchantProductOfferData
  */
 class MerchantProductOfferDataImportBusinessFactory extends SprykerMerchantProductOfferDataImportBusinessFactory
 {
+    use FlysystemS3BusinessFactoryTrait;
+
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
      */

@@ -1,0 +1,12 @@
+<?php
+
+
+namespace Pyz\Zed\MerchantProductOptionDataImport\Business;
+
+use Pyz\Zed\CsvReader\Dependency\FlysystemS3BusinessFactoryTrait;
+use Spryker\Zed\MerchantProductOptionDataImport\Business\MerchantProductOptionDataImportBusinessFactory as SprykerMerchantProductOptionDataImportBusinessFactory;
+
+class MerchantProductOptionDataImportBusinessFactory extends SprykerMerchantProductOptionDataImportBusinessFactory
+{
+    use FlysystemS3BusinessFactoryTrait;
+}
