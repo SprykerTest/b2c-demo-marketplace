@@ -6,6 +6,10 @@ tag: '1.0'
 environment: docker.dev
 image:
     tag: spryker/php:7.3-alpine3.12
+    php:
+        ini:
+            memory_limit: 20000M
+
 
 composer:
     mode: --no-dev
