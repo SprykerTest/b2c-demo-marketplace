@@ -104,6 +104,10 @@ class CsvReader implements DataReaderInterface, ConfigurableDataReaderInterface,
         $fileSystemName = $this->csvReaderConfiguration->getFileSystem();
         $fileName = $this->csvReaderConfiguration->getFileName();
 
+        if (strpos($fileName, '/vendor/') !== false) {
+            return;
+        }
+
         try {
             if (!$this->flysystemService->has($fileSystemName, $fileName)) {
                 throw new DataReaderException(sprintf('File "%s" could not be found or is not readable.', $fileName));
@@ -117,7 +121,6 @@ class CsvReader implements DataReaderInterface, ConfigurableDataReaderInterface,
             $this->fileObject = $this->flysystemService->readStream($fileSystemName, $fileName);
         } catch (FileSystemStreamException $exception) {
             $message = sprintf('File "%s" can not be streamed: ' . $exception->getMessage(), $fileName);
-            dd($message);
             throw new DataReaderException($message, $exception->getCode(), $exception);
         }
     }
@@ -160,6 +163,10 @@ class CsvReader implements DataReaderInterface, ConfigurableDataReaderInterface,
      */
     protected function getRow(): ?array
     {
+        if ($this->fileObject === null) {
+            return null;
+        }
+
         $row = fgetcsv(
             $this->fileObject,
             0,
@@ -180,6 +187,10 @@ class CsvReader implements DataReaderInterface, ConfigurableDataReaderInterface,
      */
     protected function getCurrentRow(): ?array
     {
+        if ($this->fileObject === null) {
+            return null;
+        }
+
         $currentPosition = ftell($this->fileObject);
         $row = $this->getRow();
         fseek($this->fileObject, $currentPosition);
@@ -341,6 +352,12 @@ class CsvReader implements DataReaderInterface, ConfigurableDataReaderInterface,
      */
     public function rewind()
     {
+        if ($this->fileObject === null) {
+            $this->resetKeys();
+
+            return;
+        }
+
         rewind($this->fileObject);
         $this->resetKeys();
 
