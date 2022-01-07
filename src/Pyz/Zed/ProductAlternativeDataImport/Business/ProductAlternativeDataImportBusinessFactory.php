@@ -1,0 +1,12 @@
+<?php
+
+
+namespace Pyz\Zed\ProductAlternativeDataImport\Business;
+
+use Pyz\Zed\CsvReader\Dependency\FlysystemS3BusinessFactoryTrait;
+use Spryker\Zed\ProductAlternativeDataImport\Business\ProductAlternativeDataImportBusinessFactory as SprykerProductAlternativeDataImportBusinessFactory;
+
+class ProductAlternativeDataImportBusinessFactory extends SprykerProductAlternativeDataImportBusinessFactory
+{
+    use FlysystemS3BusinessFactoryTrait;
+}

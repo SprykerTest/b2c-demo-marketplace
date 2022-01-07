@@ -7,6 +7,7 @@
 
 namespace Pyz\Zed\DataImport;
 
+use Pyz\Zed\CsvReader\Dependency\FlysystemS3DependencyProviderTrait;
 use Pyz\Zed\MerchantProductOfferDataImport\Communication\Plugin\CombinedMerchantProductOfferDataImportPlugin;
 use Pyz\Zed\MerchantProductOfferDataImport\Communication\Plugin\CombinedMerchantProductOfferStoreDataImportPlugin;
 use Pyz\Zed\PriceProductOfferDataImport\Communication\Plugin\CombinedPriceProductOfferDataImportPlugin;
@@ -78,6 +79,8 @@ use Spryker\Zed\StockDataImport\Communication\Plugin\StockStoreDataImportPlugin;
 
 class DataImportDependencyProvider extends SprykerDataImportDependencyProvider
 {
+    use FlysystemS3DependencyProviderTrait;
+
     public const FACADE_AVAILABILITY = 'availability facade';
     public const FACADE_CATEGORY = 'category facade';
     public const FACADE_PRODUCT_BUNDLE = 'product bundle facade';
@@ -88,6 +91,8 @@ class DataImportDependencyProvider extends SprykerDataImportDependencyProvider
     public const FACADE_STOCK = 'FACADE_STOCK';
     public const FACADE_STORE = 'FACADE_STORE';
     public const FACADE_MERCHANT_USER = 'FACADE_MERCHANT_USER';
+
+    public const SERVICE_FLYSYSTEM = 'SERVICE_FLYSYSTEM';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -108,6 +113,7 @@ class DataImportDependencyProvider extends SprykerDataImportDependencyProvider
         $container = $this->addStockFacade($container);
         $container = $this->addStoreFacade($container);
         $container = $this->addMerchantUserFacade($container);
+        $container = $this->addFlysystemService($container);
 
         return $container;
     }

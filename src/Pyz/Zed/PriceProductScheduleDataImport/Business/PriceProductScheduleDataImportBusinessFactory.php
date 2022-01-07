@@ -1,0 +1,12 @@
+<?php
+
+
+namespace Pyz\Zed\PriceProductScheduleDataImport\Business;
+
+use Pyz\Zed\CsvReader\Dependency\FlysystemS3BusinessFactoryTrait;
+use Spryker\Zed\PriceProductScheduleDataImport\Business\PriceProductScheduleDataImportBusinessFactory as SprykerPriceProductScheduleDataImportBusinessFactory;
+
+class PriceProductScheduleDataImportBusinessFactory extends SprykerPriceProductScheduleDataImportBusinessFactory
+{
+    use FlysystemS3BusinessFactoryTrait;
+}

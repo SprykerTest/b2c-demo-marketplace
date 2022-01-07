@@ -1,0 +1,12 @@
+<?php
+
+
+namespace Pyz\Zed\SalesOrderThresholdDataImport\Business;
+
+use Pyz\Zed\CsvReader\Dependency\FlysystemS3BusinessFactoryTrait;
+use Spryker\Zed\SalesOrderThresholdDataImport\Business\SalesOrderThresholdDataImportBusinessFactory as SprykerSalesOrderThresholdDataImportBusinessFactory;
+
+class SalesOrderThresholdDataImportBusinessFactory extends SprykerSalesOrderThresholdDataImportBusinessFactory
+{
+    use FlysystemS3BusinessFactoryTrait;
+}
